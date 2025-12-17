@@ -161,7 +161,9 @@ Run `make help` to see all targets. Here are the essential commands:
 
 ### Documentation
 - `make build-docs` - Build all documentation
+- `make build-docs-pdf` - Build documentation with PDF export (requires WeasyPrint)
 - `make serve-docs` - Serve documentation locally
+- See `docs/community/pdf_export.md` for PDF export details and limitations
 
 ## Development Workflows
 
