@@ -34,9 +34,12 @@ class LiteLLMAdapter(StructuredOutputAdapter):
         """
         from ragas.llms.litellm_llm import LiteLLMStructuredLLM
 
+        cache = kwargs.pop("cache", None)
+
         return LiteLLMStructuredLLM(
             client=client,
             model=model,
             provider=provider,
+            cache=cache,
             **kwargs,
         )
