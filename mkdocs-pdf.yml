@@ -6,6 +6,19 @@ plugins:
   - social:
       enabled: !ENV [MKDOCS_CI, true]
 
+
+  # --- Mermaid PLUGIN (Exclusive to this file) ---
+  - mermaid-to-svg:
+      enabled_if_env: ENABLE_PDF_EXPORT
+      mmdc_path: "mmdc"
+      error_on_fail: true
+      mermaid_config:
+        htmlLabels: false
+        flowchart:
+          htmlLabels: false
+        class:
+          htmlLabels: false
+
   # --- PDF PLUGIN (Exclusive to this file) ---
   - to-pdf:
       enabled_if_env: ENABLE_PDF_EXPORT

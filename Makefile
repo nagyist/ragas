@@ -177,7 +177,20 @@ check-pdf-deps: ## Check if WeasyPrint is properly installed with all dependenci
 		exit 1)
 
 
-build-docs-pdf: check-pdf-deps ## Build documentation with PDF export (requires WeasyPrint)
+check-mermaid-deps: ## Check Mermaid CLI is available and can render a diagram
+	@command -v node >/dev/null || (echo "Node.js is required for Mermaid PDF rendering"; exit 1)
+	@command -v mmdc >/dev/null || (echo "Missing 'mmdc' (Mermaid CLI). Mermaid diagrams in PDF depend on Mermaid CLI."; exit 1)
+	@tmp_dir="$$(mktemp -d)"; \
+	printf "graph TD\n  A-->B\n" > "$$tmp_dir/diag.mmd"; \
+	mmdc -i "$$tmp_dir/diag.mmd" -o "$$tmp_dir/diag.svg" >/dev/null 2>&1 || \
+		(echo "Mermaid CLI found, but rendering failed (mmdc couldn't produce SVG)."; rm -rf "$$tmp_dir"; exit 1); \
+	test -s "$$tmp_dir/diag.svg" || \
+		(echo "Mermaid CLI ran but produced an empty SVG."; rm -rf "$$tmp_dir"; exit 1); \
+	rm -rf "$$tmp_dir"; \
+	echo "Mermaid CLI is installed and can render diagrams"
+
+	
+build-docs-pdf: check-pdf-deps check-mermaid-deps ## Build documentation with PDF export (requires WeasyPrint)
 	@echo "Building documentation with PDF export..."
 	$(Q)MKDOCS_CI=false ENABLE_PDF_EXPORT=1 uv run --group docs --group docs-pdf mkdocs build -f mkdocs-pdf.yml
 	@echo "PDF generated at: site/pdf/document.pdf"

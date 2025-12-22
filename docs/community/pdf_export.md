@@ -23,6 +23,15 @@ make build-docs
 
 The `make build-docs-pdf` command automatically checks for system dependencies before building.
 
+## Mermaid diagrams in PDF (offline)
+Mermaid diagrams are rendered **offline** during the PDF build (converted to SVG before WeasyPrint runs). This requires a few additional dependencies besides WeasyPrint.
+
+### Required tools
+- Node.js (needed to run Mermaid tooling).
+- Mermaid CLI (`mmdc`), installed via `@mermaid-js/mermaid-cli`. 
+- A headless browser for Puppeteer (recommended: `chrome-headless-shell`).
+
+
 ## Current Limitations
 
 **System Dependencies**: WeasyPrint requires OS-specific system libraries (Pango, Cairo) that must be installed separately. If you encounter issues, refer to the [WeasyPrint setup instructions](https://doc.courtbouillon.org/weasyprint/stable/first_steps.html) and [troubleshooting guide](https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#troubleshooting).

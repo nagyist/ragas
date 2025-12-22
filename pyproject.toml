@@ -186,4 +186,5 @@ docs = [
 
 docs-pdf = [
     "mkdocs-to-pdf>=0.10.1",
+    "mkdocs-mermaid-to-svg"
 ]
